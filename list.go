@@ -1,6 +1,7 @@
 package main
 
 type Task struct {
+	id     int
 	title  string
 	status bool
 
@@ -14,7 +15,7 @@ type List struct {
 
 
 func create_list() *List {
-	return &List {head: nil, size: 0}
+	return &List {head: nil}
 }
 
 func create_task(t string) *Task {
@@ -47,6 +48,7 @@ func (l *List) insert(t *Task) {
 }
 
 
+// needs to be done by id
 func (l *List) remove(value string) bool {
 	if l.is_empty() {
         return false
@@ -71,22 +73,31 @@ func (l *List) remove(value string) bool {
 	}
 }
 
-func (l *List) set_task_done(value string) bool {
+func (l *List) set_task(id int) bool {
 	if l.is_empty() {
         return false
-    } else if l.head.title == value {
-		l.head.status = true
+    } else if id == 1 {
+		if l.head.status {
+			l.head.status = false
+		} else {
+			l.head.status = true
+		}
         return true
     }
-
     curr := l.head
-    for curr.next != nil && curr.next.title != value {
+	count := 1
+    for curr.next != nil && count != id {
         curr = curr.next
+		count += 1
     }
 
     if curr.next != nil {
-		curr.next.status = true
-		return true
+		if l.head.status {
+			l.head.status = false
+		} else {
+			l.head.status = true
+		}
+        return true
     } else {
 		return false
 	}
