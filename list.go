@@ -47,20 +47,20 @@ func (l *List) insert(t *Task) {
 	l.size += 1
 }
 
-
-// needs to be done by id
-func (l *List) remove(value string) bool {
+func (l *List) remove(id int) bool {
 	if l.is_empty() {
         return false
-    } else if l.head.title == value {
+    } else if id == 1 {
 		l.size -= 1
         l.head = l.head.next
         return true
     }
 
     curr := l.head
-    for curr.next != nil && curr.next.title != value {
+	count := 1
+    for curr.next != nil && count != id  {
         curr = curr.next
+		count += 1
     }
 
     if curr.next != nil {
@@ -89,7 +89,7 @@ func (l *List) set_task(id int) bool {
 	count := 1
 	for curr != nil && count != id {
 		curr = curr.next
-		count++
+		count += 1
 	}
 
 	if curr != nil {

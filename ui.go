@@ -18,11 +18,15 @@ const (
 	// CONTROLLS
 	W_KEY     = 119
 	UP_KEY    = 65
+	J_KEY	  = 106
 	S_KEY     = 115
 	DOWN_KEY  = 66
+	K_KEY     = 107
 	ENTER_KEY = 10
 	SPACE_KEY = 32
 	Q_KEY 	  = 113
+	A_KEY	  = 97
+	D_KEY     = 100
 )
 
 func disable_CtrC() {
@@ -50,6 +54,9 @@ func enable_terminal() {
 	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
 }
 
+func add_item_screen() {
+
+}
 
 func print_list(list *List, cur_pos int) {
 	fmt.Println(GREEN + "\t\tTODO LIST" + RESET + "\n")
@@ -91,22 +98,30 @@ func menu(list *List) {
 		clear_screen()
 		print_list(list, cur_pos)
 
+		fmt.Println("\n\n[ENTER] Mark 'Done/Not Done' [A] Add Item [D] Remove Item\n\n")
+
 		os.Stdin.Read(input)
 
 		switch input[0] {
-		case W_KEY, UP_KEY:
+		case W_KEY, UP_KEY, J_KEY:
 			if cur_pos > 1 {
 				cur_pos -= 1
 			}
 		
-		case S_KEY, DOWN_KEY:
+		case S_KEY, DOWN_KEY, K_KEY:
 			if cur_pos < list.size {
 				cur_pos += 1
 			}
 		
 		case ENTER_KEY, SPACE_KEY:
 			list.set_task(cur_pos)
-		
+
+		case A_KEY:
+			// Add
+
+		case D_KEY:
+			list.remove(cur_pos)
+
 		case Q_KEY:
 			exit = true
 		
