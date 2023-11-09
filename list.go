@@ -75,30 +75,32 @@ func (l *List) remove(value string) bool {
 
 func (l *List) set_task(id int) bool {
 	if l.is_empty() {
-        return false
-    } else if id == 1 {
+		return false
+	} else if id == 1 {
 		if l.head.status {
 			l.head.status = false
 		} else {
 			l.head.status = true
 		}
-        return true
-    }
-    curr := l.head
-	count := 1
-    for curr.next != nil && count != id {
-        curr = curr.next
-		count += 1
-    }
+		return true
+	}
 
-    if curr.next != nil {
-		if l.head.status {
-			l.head.status = false
+	curr := l.head
+	count := 1
+	for curr != nil && count != id {
+		curr = curr.next
+		count++
+	}
+
+	if curr != nil {
+		if curr.status {
+			curr.status = false
 		} else {
-			l.head.status = true
+			curr.status = true
 		}
-        return true
-    } else {
+		return true
+	} else {
 		return false
 	}
 }
+

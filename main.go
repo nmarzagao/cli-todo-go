@@ -2,9 +2,6 @@ package main
 
 func main() {
 	
-	// fix remove function and set_task function!!
-
-	
 	list := create_list()
 	list.insert(create_task("Play minecraft"))
 	list.insert(create_task("Study Go"))

@@ -60,15 +60,15 @@ func menu(list *List) {
 		fmt.Println(cur_pos)
 
 		os.Stdin.Read(input)
-		if input[0] == 119 {
+		if input[0] == 119 || input[0] == 65 { // up
 			if cur_pos > 1 {
 				cur_pos -= 1
 			}
-		} else if input[0] == 115 {
+		} else if input[0] == 115 || input[0] == 66 { // down
 			if cur_pos < list.size {
 				cur_pos += 1
 			}
-		} else if input[0] == 32 {
+		} else if input[0] == 32 || input[0] == 10 {
 			list.set_task(cur_pos)
 		} else if input[0] == 113 {
 			break
