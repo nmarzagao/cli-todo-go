@@ -6,6 +6,8 @@ import (
 	"os/exec"
 	"os/signal"
 	"syscall"
+	"bufio"
+	"strings"
 )
 
 const (
@@ -54,8 +56,22 @@ func enable_terminal() {
 	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
 }
 
-func add_item_screen() {
+func add_item_screen(list *List) {
+	clear_screen()
 
+	enable_terminal()
+
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Print("Enter the name of the item: ")
+	input, _ := reader.ReadString('\n')
+
+	// Remove newline character from the input
+	input = strings.TrimSpace(input)
+
+	list.insert(create_task(input))
+
+	disable_terminal()
 }
 
 func print_list(list *List, cur_pos int) {
@@ -99,6 +115,7 @@ func menu(list *List) {
 		print_list(list, cur_pos)
 
 		fmt.Println("\n\n[ENTER] Mark 'Done/Not Done' [A] Add Item [D] Remove Item\n\n")
+		fmt.Println(cur_pos)
 
 		os.Stdin.Read(input)
 
@@ -117,7 +134,7 @@ func menu(list *List) {
 			list.set_task(cur_pos)
 
 		case A_KEY:
-			// Add
+			add_item_screen(list)
 
 		case D_KEY:
 			list.remove(cur_pos)
@@ -131,3 +148,5 @@ func menu(list *List) {
     }
 	enable_terminal()
 }
+
+// In add_task_screen() backspace is not working
